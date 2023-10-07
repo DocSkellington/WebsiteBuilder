@@ -49,9 +49,8 @@ def build_site(
 
     markdown_converter = markdown.Markdown(
         extensions=[
-            "codehilite",
-            "footnotes",
             "extra",
+            "codehilite",
             "toc",
             "meta",
             "admonition",
