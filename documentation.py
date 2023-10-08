@@ -20,11 +20,12 @@ global_setup = builder.Global(
     base_url="https://docskellington.github.io/WebsiteBuilder/",
     links_in_header=[
         ("Home page", "index.html"),
+        ("Internal details", "internal.html"),
     ],
     footer=builder.Footer(
         "Website Builder.",
         [
-            builder.NetworkLink(
+            builder.Link(
                 "Github", "https://github.com/DocSkellington/WebsiteBuilder", "GitHub project"
             ),
         ],
@@ -32,5 +33,7 @@ global_setup = builder.Global(
 )
 
 remove_dir(output_folder)
+
+builder.templates.category_to_icon.add_iconoir("github", "iconoir-github")
 
 builder.build_site(input_folder, output_folder, global_setup)
