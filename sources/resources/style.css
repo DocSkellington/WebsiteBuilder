@@ -1,0 +1,178 @@
+:root {
+    --header-height: max(50px, 6vh);
+    --background-primary: #ffffff;
+    --background-secondary: #ffdede;
+    --color-primary: #000000;
+    --color-secondary: #7e3333;
+    --link-default: #5e0c0c;
+    --link-visited: #5e0c0c;
+    --link-hover: #995100;
+}
+
+body {
+    background-color: var(--background-primary);
+    color: var(--color-primary);
+    margin: 0;
+    text-align: justify;
+    min-height: 100vh;
+    min-width: 270px;
+}
+
+header {
+    background-color: var(--background-secondary);
+    height: var(--header-height);
+    position: sticky;
+    top: 0;
+    left: 0;
+    padding-left: 10%;
+    padding-right: 10%;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+}
+
+header .title {
+    width: 30%;
+}
+
+header nav {
+    display: flex;
+    overflow: hidden;
+    justify-content: right;
+    width: 70%;
+    text-align: left;
+}
+
+header nav div:nth-child(n+2) {
+    margin-left: 20px;
+}
+
+main {
+    margin-left: 10%;
+    margin-right: 20%;
+    padding-bottom: 6em;
+}
+
+main > *:nth-child(1) {
+    margin-top: 0px;
+    padding-top: 15px;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background-color: var(--background-secondary);
+    padding-left: 10%;
+    padding-right: 10%;
+    width: 80%;
+    overflow: hidden;
+    font-size: 90%;
+}
+
+footer .left {
+    float: left;
+    width: 45%;
+}
+
+footer .right {
+    float: right;
+    width: 50%;
+    text-align: right;
+    justify-content: space-between;
+    margin: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 0;
+}
+
+img {
+    max-width: 100%;
+}
+
+a {
+    color: var(--link-default);
+}
+a:visited {
+    color: var(--link-visited);
+}
+a.title {
+    color: var(--color-primary);
+    font-size: x-large;
+}
+a:hover {
+    color: var(--link-hover);
+}
+
+:target {
+    scroll-margin-top: var(--header-height);
+}
+
+.toc {
+    float: right;
+    right: 0;
+    top: var(--header-height);
+    width: 15%;
+    overflow: auto;
+    margin-right: 20px;
+    text-align: left;
+    font-size: 90%;
+}
+.toc a {
+    text-decoration: none;
+}
+
+header a {
+    text-decoration: none;
+}
+
+i.icon,
+img.icon {
+    text-align: center;
+    vertical-align: top;
+    padding-top: 4px;
+    margin: auto;
+    margin-right: 10px;
+}
+
+i.icon::before {
+    font-size: 15px;
+}
+
+.admonition {
+    color: var(--color-secondary);
+    font-style: italic;
+}
+
+@media only screen and (max-height: 800px) {
+    .toc ul li ul li {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .toc {
+        display: none;
+    }
+
+    main {
+        margin-right: 10%;
+    }
+
+    header nav div:nth-child(n+3) {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    footer .left {
+        float: none;
+        width: 100%;
+    }
+
+    footer .right {
+        display: none;
+    }
+}
