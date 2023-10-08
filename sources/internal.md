@@ -16,8 +16,6 @@ The following code registers a new template called `example` that simply returns
 import builder.templates
 
 class ExampleTemplate(builder.templates.Template):
-  name = "example"
-
   def build_document(self, body: str, metadata: Dict[str, Any], global_setup: builder.Global, toc: str) -> str:
     # body is the Markdown file already converted to HTML
     # metadata contains the key-value pairs defined at the top of the Markdown file
@@ -26,7 +24,12 @@ class ExampleTemplate(builder.templates.Template):
     return body
 ```
 
-The file must be present in the `builder/templates` folder to be seen by the builder.
+Then, in your main file, add
+```
+builder.templates.registered_templates.register("example", ExampleTemplate) # Register the template
+```
+The default layout is always loaded and registered.
+
 The `Template` base class offers some utilities to construct the HTML output:
 
   - `self._head(title: str, global_setup: builder.Global)` that creates the `<head>` part.

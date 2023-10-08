@@ -87,23 +87,6 @@ def build_site(
                 shutil.copy(file.absolute(), output_folder / file.name)
 
 
-def _get_template(template_name: str) -> builder.templates.Template:
-    for module in pkgutil.iter_modules(path=["builder/templates/"]):
-        template_module = importlib.import_module(f"builder.templates.{module.name}")
-        for element in dir(template_module):
-            element = getattr(template_module, element)
-            if (
-                inspect.isclass(element)
-                and element.__module__ == template_module.__name__
-            ):
-                if element.name == template_name:
-                    return element()
-    print(
-        f"Could not find a template named {template_name}. Default layout will be used."
-    )
-    return None
-
-
 def _build_file(
     markdown_converter: markdown.Markdown,
     input_file: Path,
@@ -115,11 +98,9 @@ def _build_file(
         html = markdown_converter.convert(file.read())
     metadata: Dict[str, Any] = markdown_converter.Meta  # pylint: disable=E1101
 
-    template: builder.templates.Template = _get_template(
+    template: builder.templates.Template = builder.templates.registered_templates.get(
         metadata.get("layout", ["default"])[0]
     )
-    if template is None:
-        template = _get_template("default")
 
     output = template.build_document(
         html, metadata, global_setup, markdown_converter.toc

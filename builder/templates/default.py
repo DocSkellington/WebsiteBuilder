@@ -3,8 +3,6 @@ from typing import Any, Dict
 
 
 class DefaultTemplate(builder.templates.Template):
-    name = "default"
-
     def __init__(self) -> None:
         super().__init__()
         self.css_files = [
