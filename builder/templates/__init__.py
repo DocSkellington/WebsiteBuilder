@@ -1,14 +1,33 @@
 import abc
 import urllib
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Callable
 from dataclasses import dataclass, field
 
 
 @dataclass
 class JavaScript:
     src: str
-    id: str = ""
+    script_id: str = ""
     other: List[str] = field(default_factory=list)
+
+
+class CategoryToIcon:
+    def __init__(self) -> None:
+        self.dict: Dict[str, Callable[[], str]] = {}
+
+    def add_iconoir(self, category: str, iconoir: str) -> None:
+        self.add_icon(category, lambda: f'<i class="icon {iconoir}"></i>')
+
+    def add_icon(self, category: str, icon_fct: Callable[[], str]) -> None:
+        category = category.lower()
+        self.dict[category] = icon_fct
+
+    def get_icon(self, category: str) -> str:
+        category = category.lower()
+        return self.dict.get(category, lambda: "")()
+
+
+category_to_icon: CategoryToIcon = CategoryToIcon()
 
 
 def add_base_url(base_url: str, link: str) -> str:
@@ -46,10 +65,10 @@ class Template(abc.ABC):
             if url is None:
                 print(f"Invalid script path {script}")
             else:
-                id = f'id="{script.id}"' if script.id != "" else ""
+                js_id = f'id="{script.script_id}"' if script.script_id != "" else ""
                 other = " ".join(script.other)
                 head += (
-                    f'<script type="text/javascript" {id} {other} src="{url}"></script>'
+                    f'<script type="text/javascript" {js_id} {other} src="{url}"></script>'
                 )
 
         head += "</head>"
@@ -66,19 +85,7 @@ class Template(abc.ABC):
             "Each template must implement the method build_document"
         )
 
-    def _build_network_link(self, network: str, link: str, text: str) -> str:
-        network = network.lower()
-        if network == "github":
-            icon = "iconoir-github"
-        elif network == "orcid":
-            return (
-                '<img class="contact-icon orcid" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" alt=""/>'
-                + f'<a class="orcid-link" href="{link}">{text}</a>'
-            )
-        else:
-            return f'<a href="{link}">{text}</a>'
+    def _build_link(self, link: "builder.Link") -> str:
+        a_tag = f'<a class="{link.category.lower()}-link" href="{link.link}">{link.text}</a>'
+        return category_to_icon.get_icon(link.category) + a_tag
 
-        return (
-            f'<i class="contact-icon {icon}"></i>'
-            + f'<a class="{network}-link" href="{link}">{text}</a>'
-        )

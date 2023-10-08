@@ -15,8 +15,8 @@ import builder.extensions
 
 
 @dataclass
-class NetworkLink:
-    network: str
+class Link:
+    category: str
     link: str
     text: str
 
@@ -24,7 +24,7 @@ class NetworkLink:
 @dataclass
 class Footer:
     description: str
-    links: List[NetworkLink]
+    links: List[Link]
 
 
 @dataclass

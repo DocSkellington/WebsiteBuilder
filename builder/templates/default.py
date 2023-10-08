@@ -33,7 +33,7 @@ class DefaultTemplate(builder.templates.Template):
 
         return f"<!DOCTYPE html><html>{head}{header}{toc}<main>{title_html}{body}</main>{footer}</html>"
 
-    def _header(self, metadata: Dict[str, Any], global_setup: builder.Global) -> str:
+    def _header(self, _metadata: Dict[str, Any], global_setup: builder.Global) -> str:
         header = "<header>"
         header += f"<div><a href='{builder.templates.add_base_url(global_setup.base_url, '''index.html''')}' class='title'>{global_setup.title}</a></div>"
         header += "<nav>"
@@ -44,16 +44,14 @@ class DefaultTemplate(builder.templates.Template):
 
         return header
 
-    def _footer(self, metadata: Dict[str, Any], global_setup: builder.Global) -> str:
+    def _footer(self, _metadata: Dict[str, Any], global_setup: builder.Global) -> str:
         footer = "<footer>"
         if global_setup.footer is not None:
             footer += f"<p class='left'>{global_setup.footer.description}</p>"
             footer += "<address class='right'>"
-            for network_link in global_setup.footer.links:
-                footer += f'<div class="network {network_link.network}">'
-                footer += self._build_network_link(
-                    network_link.network, network_link.link, network_link.text
-                )
+            for link in global_setup.footer.links:
+                footer += f'<div class="network {link.category}">'
+                footer += self._build_link(link)
                 footer += "</div>"
             footer += "</address>"
         footer += "</footer>"
