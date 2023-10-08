@@ -6,11 +6,12 @@ This project offers a light template system for [Python-Markdown](https://python
 
 ### From release
 
-Download the `.whl` file of the latest release and run `pip install websitebuilder-1.0.0-py3-none-any.whl`.
+Due to dependencies coming from GitHub, the wheel file is not enough.
+So, download both the `.whl` and `requirements.txt` files of the latest release and run `pip install -r requirements.txt && pip install websitebuilder-1.0.0-py3-none-any.whl`.
 
 ### From source
 
-Clone the repository locally and run `pip install .`.
+Clone the repository locally and run `pip install -r requirements.txt && pip install .`.
 Dependencies will be automatically installed.
 
 ## Usage
