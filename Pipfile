@@ -14,4 +14,4 @@ caption = {editable = true, git = "https://github.com/flywire/caption"}
 build = "*"
 
 [requires]
-python_version = "3.11"
+python_version = "3.12"
