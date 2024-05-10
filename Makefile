@@ -6,10 +6,11 @@ dependencies:
 	pipenv install --dev
 
 release:
+	pipenv requirements > requirements.txt
 	pipenv run python -m build
 	zip release -r \
 		requirements.txt dist/ \
-		document.py sources/ output/ \
+		documentation.py sources/ output/ \
 		README.md LICENSE
 
 clean:
